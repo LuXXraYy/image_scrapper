@@ -54,6 +54,13 @@ def index():
                 with open(os.path.join(save_dir, f"{searchString}_{img_tags.index(images)}.jpg"), "wb") as f:
                     f.write(img_data)
 
+            
+            client = pymongo.MongoClient("mongodb+srv://hrithik2406:Awi2406@cluster0.kwjgqgn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+            db = client['image_scrapper']
+            review_col = db['image_scrapper_data']
+            review_col.insert_many(img_data_store)
+
+
             return render_template('results.html', reviews=img_data_store[0:len(img_data_store)])
 
         except Exception as e:
